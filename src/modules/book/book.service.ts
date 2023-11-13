@@ -23,4 +23,10 @@ export class BookService {
 
     return book;
   }
+
+  async findAll() {
+    const books = await this.prisma.book.findMany();
+
+    return books;
+  }
 }
