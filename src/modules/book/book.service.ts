@@ -31,7 +31,6 @@ export class BookService {
   }
 
   async update(id: string, data: BookDTO) {
-    console.log({ id });
     const bookExists = await this.prisma.book.findUnique({
       where: {
         id,
@@ -44,6 +43,24 @@ export class BookService {
 
     return await this.prisma.book.update({
       data,
+      where: {
+        id,
+      },
+    });
+  }
+
+  async delete(id: string) {
+    const bookExists = await this.prisma.book.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!bookExists) {
+      throw new Error('Book does not exists!');
+    }
+
+    return await this.prisma.book.delete({
       where: {
         id,
       },
